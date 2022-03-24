@@ -1,5 +1,7 @@
 const { Sequelize, Model, DataTypes } = require("@sequelize/core");
 
+const { convertToMeasurement } = require("./utils");
+
 //const sequelize = new Sequelize("sqlite::memory:");
 const sequelize = new Sequelize({
   dialect: "sqlite",
@@ -93,8 +95,7 @@ async function getAllMeasurements() {
   const measurements = await Measurement.findAll();
   if (!measurements) return [];
 
-  console.log("All measurements:", JSON.stringify(measurements, null, 4));
-  return measurements;
+  return measurements.map((data) => convertToMeasurement(data));
 }
 
 /**
@@ -103,10 +104,9 @@ async function getAllMeasurements() {
  */
 async function getMeasurementById(id) {
   const measurement = await Measurement.findByPk(id);
-  if (!measurement) return {};
+  if (!measurement) return null;
 
-  console.log("Measurement:", JSON.stringify(measurement, null, 4));
-  return measurement;
+  return convertToMeasurement(measurement);
 }
 
 /**
@@ -115,14 +115,11 @@ async function getMeasurementById(id) {
  */
 async function getMeasurementByCode(code) {
   const measurement = await Measurement.findOne({
-    where: {
-      code,
-    },
+    where: { code },
   });
-  if (!measurement) return {};
+  if (!measurement) return null;
 
-  console.log("Measurement:", JSON.stringify(measurement, null, 4));
-  return measurement;
+  return convertToMeasurement(measurement);
 }
 
 /**
