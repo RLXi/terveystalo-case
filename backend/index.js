@@ -64,7 +64,14 @@ app.post("/tests", async (req, res) => {
   res.status(202).send(measurement);
 });
 
-app.delete("/tests", async (req, res) => {
+app.delete("/tests/:id", async (req, res) => {
+  const { id } = req.params;
+  if (isNaN(id)) {
+    res.status(500).send("Invalid id");
+    return;
+  }
+
+  await deleteMeasurement(parseInt(id));
   res.status(204).send("Entry deleted");
 });
 
