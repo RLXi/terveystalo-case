@@ -20,6 +20,10 @@ Measurement.init(
   { sequelize, modelName: "measurement" }
 );
 
+/**
+ *
+ * @returns
+ */
 async function createStartingData() {
   const m = await Measurement.count();
 
@@ -89,6 +93,10 @@ async function createMeasurement({
   return entry;
 }
 
+/**
+ *
+ * @returns
+ */
 async function getAllMeasurements() {
   const measurements = await Measurement.findAll();
   if (!measurements) return [];
@@ -122,7 +130,7 @@ async function getMeasurementByCode(code) {
 
 /**
  *
- * @param {string} id
+ * @param {number} id
  * @returns
  */
 async function deleteMeasurement(id) {
