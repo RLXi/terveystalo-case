@@ -85,9 +85,7 @@ async function createMeasurement({
     lowerReference,
     upperReference,
   });
-  console.log(entry.toJSON());
 
-  await sequelize.close();
   return entry;
 }
 
