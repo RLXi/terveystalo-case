@@ -31,14 +31,14 @@ async function createStartingData() {
 
   await sequelize.sync();
   const hemoglobin = await Measurement.create({
-    code: "hg",
+    code: "Hb",
     name: "Hemoglobin",
     unit: "g/l",
     lowerReference: 134,
     upperReference: 167,
   });
   const ldl = await Measurement.create({
-    code: "ldl",
+    code: "LDL",
     name: "LDL-cholesterol",
     unit: "mmol/l",
     lowerReference: 0,
