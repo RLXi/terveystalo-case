@@ -10,6 +10,9 @@ const {
 } = require("./db.js");
 
 const app = express();
+
+app.use(express.json());
+
 const port = 4000;
 
 app.get("/", (req, res) => {
@@ -41,6 +44,7 @@ app.get("/tests/:id", async (req, res) => {
     res.status(500).send("Can't find measurement");
     return;
   }
+
   const measurement = await getMeasurementById(parseInt(req.params.id));
   if (measurement) {
     res.status(200).json(measurement);
