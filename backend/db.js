@@ -126,6 +126,8 @@ async function getMeasurementByCode(code) {
  * @returns
  */
 async function deleteMeasurement(id) {
+  await Measurement.destroy({ where: { id } });
+  console.log(`Measurement #${id} deleted`);
   return true;
 }
 
