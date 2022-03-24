@@ -2,6 +2,7 @@ const express = require("express");
 
 const {
   testConnection,
+  createStartingData,
   getAllMeasurements,
   getMeasurementById,
   createMeasurement,
@@ -13,6 +14,15 @@ const port = 4000;
 
 app.get("/", (req, res) => {
   res.status(200).send("Welcome!");
+});
+
+app.get("/startingdata", async (req, res) => {
+  const created = await createStartingData();
+  if (!created) {
+    res.status(200).send("Data already exist");
+    return;
+  }
+  res.status(200).send("Starting data created");
 });
 
 app.get("/connectiontest", async (req, res) => {
@@ -55,7 +65,7 @@ app.post("/tests", async (req, res) => {
 });
 
 app.delete("/tests", async (req, res) => {
-  res.status(204).send([]);
+  res.status(204).send("Entry deleted");
 });
 
 app.listen(port, () => {

@@ -1,4 +1,4 @@
-const { Sequelize } = require("@sequelize/core");
+const { Sequelize, Model, DataTypes } = require("@sequelize/core");
 
 //const sequelize = new Sequelize("sqlite::memory:");
 const sequelize = new Sequelize({
@@ -6,9 +6,23 @@ const sequelize = new Sequelize({
   storage: "./database.sqlite",
 });
 
-const Measurement = require("./models.js");
+class Measurement extends Model {}
+Measurement.init(
+  {
+    code: DataTypes.STRING,
+    name: DataTypes.STRING,
+    unit: DataTypes.STRING,
+    lowerReference: DataTypes.NUMBER,
+    upperReference: DataTypes.NUMBER,
+  },
+  { sequelize, modelName: "measurement" }
+);
 
 async function createStartingData() {
+  const m = await Measurement.count();
+
+  if (m > 0) return false;
+
   await sequelize.sync();
   const hemoglobin = await Measurement.create({
     code: "hg",
@@ -26,6 +40,7 @@ async function createStartingData() {
   });
 
   console.log([hemoglobin.toJSON(), ldl.toJSON()]);
+  return true;
 }
 
 /**
@@ -34,6 +49,8 @@ async function createStartingData() {
 async function testConnection() {
   try {
     await sequelize.authenticate();
+    const m = await Measurement.count();
+    console.log(m);
     return "Connection has been established successfully.";
   } catch (error) {
     return `Unable to connect to the database: ${error}`;
