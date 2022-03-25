@@ -1,6 +1,6 @@
-const { Sequelize, Model, DataTypes } = require("@sequelize/core");
+import { Sequelize, Model, DataTypes } from "@sequelize/core";
 
-const { convertToMeasurement } = require("./utils");
+import { convertToMeasurement } from "./utils.js";
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
@@ -156,7 +156,7 @@ async function deleteMeasurement(id) {
   return true;
 }
 
-module.exports = {
+export {
   testConnection,
   createStartingData,
   createMeasurement,

@@ -23,4 +23,4 @@ function convertToMeasurement({
   };
 }
 
-module.exports = { convertToMeasurement };
+export { convertToMeasurement };

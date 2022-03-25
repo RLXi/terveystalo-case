@@ -1,16 +1,16 @@
-const express = require("express");
-const router = express.Router();
+import { Router, json } from "express";
+const router = Router();
 
-const {
+import {
   testConnection,
   createStartingData,
   getAllMeasurements,
   getMeasurementById,
   createMeasurement,
   deleteMeasurement,
-} = require("./db.js");
+} from "./db.js";
 
-router.use(express.json());
+router.use(json());
 
 router.get("/", (req, res) => {
   res.status(200).send("Welcome!");
@@ -32,7 +32,6 @@ router.get("/connectiontest", async (req, res) => {
 
 router.get("/tests", async (req, res) => {
   const measurements = await getAllMeasurements();
-  console.log(measurements);
   res.status(200).json(measurements);
 });
 
@@ -71,4 +70,8 @@ router.delete("/tests", async (req, res) => {
   res.status(204).send("Entry deleted");
 });
 
-module.exports = { router };
+router.get("*", (req, res) => {
+  res.status(404).send("");
+});
+
+export { router };
