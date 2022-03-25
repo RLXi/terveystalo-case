@@ -2,13 +2,15 @@ import { Measurement } from "../interfaces";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const apiurl = import.meta.env.VITE_APIURL || "http://localhost:4000";
+
 export function useData() {
   const [data, setData] = useState<Measurement[]>([]);
 
   useEffect(() => {
     async function getData() {
       try {
-        const response = await axios.get("http://localhost:4000/tests");
+        const response = await axios.get(`${apiurl}/tests`);
         setData(response.data);
       } catch (e) {
         console.error(e);
@@ -20,7 +22,7 @@ export function useData() {
 
   async function deleteItem(id: number) {
     try {
-      const response = await axios.delete(`http://localhost:4000/tests/${id}`);
+      const response = await axios.delete(`${apiurl}/tests/${id}`);
       console.log(response);
       const filtered = data.filter((item) => item.id !== id);
       setData(filtered);

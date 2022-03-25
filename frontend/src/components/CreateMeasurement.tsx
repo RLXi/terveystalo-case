@@ -2,6 +2,8 @@ import { useForm } from "@mantine/form";
 import { Box, Button, Group, NumberInput, TextInput } from "@mantine/core";
 import axios from "axios";
 
+const apiurl = import.meta.env.VITE_APIURL || "http://localhost:4000";
+
 interface FormFields {
   name: string;
   code: string;
@@ -28,7 +30,7 @@ export function CreateMeasurement() {
   });
 
   async function handleSubmit(values: FormFields) {
-    const response = await axios.post("http://localhost:4000/tests", values);
+    const response = await axios.post(`${apiurl}/tests`, values);
     console.log(response.data);
   }
 

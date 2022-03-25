@@ -1,0 +1,20 @@
+version: "3"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "4000:8080"
+    volumes:
+      - terveystalo-backend:/app
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:8000"
+    volumes:
+      - terveystalo-frontend:/app
+
+volumes:
+  terveystalo-backend:
+    -
+  terveystalo-frontend:
+    -

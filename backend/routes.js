@@ -1,4 +1,5 @@
 import { Router, json } from "express";
+import cors from "cors";
 const router = Router();
 
 import {
@@ -10,6 +11,7 @@ import {
   deleteMeasurement,
 } from "./db.js";
 
+router.use(cors());
 router.use(json());
 
 router.get("/", (req, res) => {
