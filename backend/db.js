@@ -2,11 +2,33 @@ const { Sequelize, Model, DataTypes } = require("@sequelize/core");
 
 const { convertToMeasurement } = require("./utils");
 
-//const sequelize = new Sequelize("sqlite::memory:");
 const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "./database.sqlite",
 });
+
+/**
+ * @typedef {Object} Measurement
+ * @property {string} code
+ * @property {string} name
+ * @property {string} unit
+ * @property {number} lowerReference
+ * @property {number} upperReference
+ */
+
+/**
+ * @typedef {Object} ReferenceValues
+ * @property {number} lowerReference
+ * @property {number} upperReference
+ */
+
+/**
+ * @typedef {Object} ConvertedMeasurement
+ * @property {string} code
+ * @property {string} name
+ * @property {string} unit
+ * @property {ReferenceValues} referenceValues
+ */
 
 class Measurement extends Model {}
 Measurement.init(
@@ -22,7 +44,7 @@ Measurement.init(
 
 /**
  *
- * @returns
+ * @returns {boolean}
  */
 async function createStartingData() {
   const m = await Measurement.count();
@@ -50,13 +72,11 @@ async function createStartingData() {
 }
 
 /**
- *
+ *  @returns {string}
  */
 async function testConnection() {
   try {
     await sequelize.authenticate();
-    const m = await Measurement.count();
-    console.log(m);
     return "Connection has been established successfully.";
   } catch (error) {
     return `Unable to connect to the database: ${error}`;
@@ -66,13 +86,8 @@ async function testConnection() {
 /**
  *  Create new meaurement entry into the database
  *
- * @param {Object} obj - Measurement object
- * @param {string} obj.code
- * @param {string} obj.name
- * @param {string} obj.unit
- * @param {number} obj.lowerReference
- * @param {number} obj.upperReference
- * @returns {Object}
+ * @param {Measurement} obj - Measurement object
+ * @returns {ConvertedMeasurement}
  */
 async function createMeasurement({
   code,
@@ -90,12 +105,12 @@ async function createMeasurement({
     upperReference,
   });
 
-  return entry;
+  return convertToMeasurement(entry);
 }
 
 /**
  *
- * @returns
+ * @returns {ConvertedMeasurement[]}
  */
 async function getAllMeasurements() {
   const measurements = await Measurement.findAll();
@@ -107,6 +122,7 @@ async function getAllMeasurements() {
 /**
  *
  * @param {number} id
+ * @returns {ConvertedMeasurement}
  */
 async function getMeasurementById(id) {
   const measurement = await Measurement.findByPk(id);
@@ -118,6 +134,7 @@ async function getMeasurementById(id) {
 /**
  *
  * @param {string} code
+ * @returns {ConvertedMeasurement}
  */
 async function getMeasurementByCode(code) {
   const measurement = await Measurement.findOne({
@@ -131,7 +148,7 @@ async function getMeasurementByCode(code) {
 /**
  *
  * @param {number} id
- * @returns
+ * @returns {boolean}
  */
 async function deleteMeasurement(id) {
   await Measurement.destroy({ where: { id } });

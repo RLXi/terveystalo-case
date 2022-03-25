@@ -1,3 +1,8 @@
+/**
+ *
+ * @param {import('./db.js').Measurement} param0
+ * @returns {import('./db.js').ConvertedMeasurement}
+ */
 function convertToMeasurement({
   id,
   name,
