@@ -104,8 +104,8 @@ async function createMeasurement({
     lowerReference,
     upperReference,
   });
-
-  return convertToMeasurement(entry);
+  console.log(entry.toJSON());
+  return convertToMeasurement(entry.toJSON());
 }
 
 /**
