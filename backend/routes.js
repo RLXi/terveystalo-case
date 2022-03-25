@@ -61,12 +61,12 @@ router.post("/tests", async (req, res) => {
   };
 
   const measurement = await createMeasurement(newMeasurement);
-  res.status(202).send(measurement);
+  res.status(201).json(measurement);
 });
 
-router.delete("/tests", async (req, res) => {
-  const { id } = req.body.id;
-  const response = await deleteMeasurement(id);
+router.delete("/tests/:id", async (req, res) => {
+  const { id } = req.params;
+  const response = await deleteMeasurement(parseInt(id));
   res.status(204).send("Entry deleted");
 });
 
