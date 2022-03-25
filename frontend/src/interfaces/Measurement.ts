@@ -1,4 +1,6 @@
 export interface Measurement {
+  id: number;
+
   // Measurement code
   code: string;
 

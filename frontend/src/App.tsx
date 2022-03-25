@@ -1,13 +1,15 @@
-import { useState } from "react";
-import "./App.css";
+import { AppShell } from "@mantine/core";
 
-import { Layout } from "./components";
+import { CreateMeasurement, ListMeasurements } from "./components";
+
+import styles from "./App.module.css";
 
 function App() {
   return (
-    <div className="App">
-      <Layout />
-    </div>
+    <AppShell padding="md">
+      <ListMeasurements />
+      <CreateMeasurement />
+    </AppShell>
   );
 }
 
