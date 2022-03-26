@@ -1,20 +1,7 @@
-version: "3"
+version: "3.9"
 services:
-  backend:
-    build: ./backend
+  terveystalo-app:
+    container_name: terveystalo-app
+    build: .
     ports:
-      - "4000:8080"
-    volumes:
-      - terveystalo-backend:/app
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:8000"
-    volumes:
-      - terveystalo-frontend:/app
-
-volumes:
-  terveystalo-backend:
-    -
-  terveystalo-frontend:
-    -
+      - 8080:8080
