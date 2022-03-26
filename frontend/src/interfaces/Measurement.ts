@@ -1,4 +1,5 @@
 export interface Measurement {
+  // Database id
   id: number;
 
   // Measurement code
