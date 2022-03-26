@@ -5,7 +5,7 @@ import axios from "axios";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const apiurl = import.meta.env.VITE_APIURL || "http://localhost:4000";
+const apiurl = import.meta.env.VITE_APIURL || "http://localhost:8080/api";
 
 interface FormFields {
   name: string;
