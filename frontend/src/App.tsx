@@ -1,14 +1,14 @@
+import { useState } from "react";
 import { AppShell } from "@mantine/core";
-
-import { CreateMeasurement, ListMeasurements } from "./components";
+import { Header } from "./components";
+import { Outlet } from "react-router";
 
 import styles from "./App.module.css";
 
 function App() {
   return (
-    <AppShell padding="md">
-      <ListMeasurements />
-      <CreateMeasurement />
+    <AppShell header={<Header />} padding="md">
+      <Outlet />
     </AppShell>
   );
 }
