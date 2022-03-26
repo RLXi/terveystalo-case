@@ -26,6 +26,8 @@ COPY backend .
 
 COPY --from=frontend /webapp/dist ./public
 
+RUN npm run init
+
 ENV PORT=8080
 
 EXPOSE 8080

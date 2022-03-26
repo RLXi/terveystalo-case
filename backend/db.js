@@ -42,6 +42,12 @@ Measurement.init(
   { sequelize, modelName: "measurement" }
 );
 
+async function createDB() {
+  await sequelize.sync();
+
+  createStartingData();
+}
+
 /**
  *
  * @returns {boolean}
@@ -51,7 +57,6 @@ async function createStartingData() {
 
   if (m > 0) return false;
 
-  await sequelize.sync();
   const hemoglobin = await Measurement.create({
     code: "Hb",
     name: "Hemoglobin",
@@ -164,4 +169,5 @@ export {
   getAllMeasurements,
   getMeasurementById,
   getMeasurementByCode,
+  createDB,
 };
