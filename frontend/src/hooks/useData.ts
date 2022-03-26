@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNotifications } from "@mantine/notifications";
 import axios from "axios";
 
-const apiurl = import.meta.env.VITE_APIURL || "http://localhost:4000";
+const apiurl = import.meta.env.VITE_APIURL || "http://localhost:8080";
 
 export function useData() {
   const [data, setData] = useState<Measurement[]>([]);
