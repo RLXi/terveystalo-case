@@ -1,6 +1,9 @@
 import { useForm } from "@mantine/form";
 import { Box, Button, Group, NumberInput, TextInput } from "@mantine/core";
+import { useNotifications } from "@mantine/notifications";
 import axios from "axios";
+import { FaCheck, FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const apiurl = import.meta.env.VITE_APIURL || "http://localhost:4000";
 
@@ -12,7 +15,16 @@ interface FormFields {
   upperReference: number;
 }
 
-export function CreateMeasurement() {
+export function CreateMeasurement({
+  closeDrawer,
+  redirect,
+}: {
+  closeDrawer?: () => void;
+  redirect?: boolean;
+}) {
+  const notifications = useNotifications();
+  const navigate = useNavigate();
+
   const measurementForm = useForm({
     initialValues: {
       name: "",
@@ -30,8 +42,24 @@ export function CreateMeasurement() {
   });
 
   async function handleSubmit(values: FormFields) {
-    const response = await axios.post(`${apiurl}/tests`, values);
-    console.log(response.data);
+    try {
+      const response = await axios.post(`${apiurl}/tests`, values);
+      console.log(response.data);
+      notifications.showNotification({
+        icon: <FaCheck />,
+        message: "Measurement created",
+        color: "green",
+      });
+      if (closeDrawer) closeDrawer();
+      if (redirect) navigate("/");
+    } catch (e) {
+      console.error(e);
+      notifications.showNotification({
+        icon: <FaTimes />,
+        message: "Failed to create measurement",
+        color: "red",
+      });
+    }
   }
 
   return (
@@ -51,7 +79,7 @@ export function CreateMeasurement() {
         />
         <TextInput
           required
-          label="unit"
+          label="Unit"
           placeholder="g/l"
           {...measurementForm.getInputProps("unit")}
         />
@@ -69,7 +97,9 @@ export function CreateMeasurement() {
         />
 
         <Group position="right" mt="md">
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={!measurementForm.errors}>
+            Submit
+          </Button>
         </Group>
       </form>
     </Box>

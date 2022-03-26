@@ -1,11 +1,13 @@
 import { Measurement } from "../interfaces";
 import { useState, useEffect } from "react";
+import { useNotifications } from "@mantine/notifications";
 import axios from "axios";
 
 const apiurl = import.meta.env.VITE_APIURL || "http://localhost:4000";
 
 export function useData() {
   const [data, setData] = useState<Measurement[]>([]);
+  const notifications = useNotifications();
 
   useEffect(() => {
     async function getData() {
@@ -26,6 +28,9 @@ export function useData() {
       console.log(response);
       const filtered = data.filter((item) => item.id !== id);
       setData(filtered);
+      notifications.showNotification({
+        message: "Measurement deleted",
+      });
     } catch (e) {
       console.error(e);
     }
