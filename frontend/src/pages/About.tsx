@@ -1,4 +1,4 @@
-import { List } from "@mantine/core";
+import { List, Text } from "@mantine/core";
 
 export function About() {
   return (
@@ -7,20 +7,121 @@ export function About() {
       <h2>Backend</h2>
       <p>Uses following dependencies:</p>
       <List>
-        <List.Item>ExpessJS</List.Item>
-        <List.Item>Sequelize</List.Item>
-        <List.Item>SQLite</List.Item>
-        <List.Item>Mocha</List.Item>
+        <List.Item>
+          <Text
+            variant="link"
+            component="a"
+            href="https://expressjs.com/"
+            target="_blank"
+          >
+            ExpessJS
+          </Text>
+        </List.Item>
+        <List.Item>
+          <Text
+            variant="link"
+            component="a"
+            href="https://sequelize.org/"
+            target="_blank"
+          >
+            Sequelize
+          </Text>
+        </List.Item>
+        <List.Item>
+          <Text
+            variant="link"
+            component="a"
+            href="https://www.sqlite.org/index.html"
+            target="_blank"
+          >
+            SQLite
+          </Text>
+        </List.Item>
+        <List.Item>
+          <Text
+            variant="link"
+            component="a"
+            href="https://www.npmjs.com/package/supertest"
+            target="_blank"
+          >
+            Supertest
+          </Text>
+        </List.Item>
+        <List.Item>
+          <Text
+            variant="link"
+            component="a"
+            href="https://mochajs.org/"
+            target="_blank"
+          >
+            Mocha
+          </Text>
+        </List.Item>
       </List>
       <h2>Frontend</h2>
       <p>Uses following dependencies:</p>
+
       <List>
-        <List.Item>Vite</List.Item>
-        <List.Item>TypeScript</List.Item>
-        <List.Item>React</List.Item>
-        <List.Item>React Router</List.Item>
-        <List.Item>Axios</List.Item>
-        <List.Item>Mantine</List.Item>
+        <List.Item>
+          <Text
+            variant="link"
+            component="a"
+            href="https://vitejs.dev/"
+            target="_blank"
+          >
+            Vite
+          </Text>
+        </List.Item>
+        <List.Item>
+          <Text
+            variant="link"
+            component="a"
+            href="https://www.typescriptlang.org/"
+            target="_blank"
+          >
+            TypeScript
+          </Text>
+        </List.Item>
+        <List.Item>
+          <Text
+            variant="link"
+            component="a"
+            href="https://reactjs.org/"
+            target="_blank"
+          >
+            React
+          </Text>
+        </List.Item>
+        <List.Item>
+          <Text
+            variant="link"
+            component="a"
+            href="https://reactrouter.com/"
+            target="_blank"
+          >
+            React Router
+          </Text>
+        </List.Item>
+        <List.Item>
+          <Text
+            variant="link"
+            component="a"
+            href="https://axios-http.com/"
+            target="_blank"
+          >
+            Axios
+          </Text>
+        </List.Item>
+        <List.Item>
+          <Text
+            variant="link"
+            component="a"
+            href="https://mantine.dev/"
+            target="_blank"
+          >
+            Mantine
+          </Text>
+        </List.Item>
       </List>
       <p>Production build containerized with Docker</p>
     </div>
