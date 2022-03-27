@@ -28,13 +28,13 @@ export function CreateMeasurement({
     },
     validate: {
       upperReference: (value, otherValues) => {
-        if (!value) return "Value is required";
+        if (!value && value !== 0) return "Value is required";
         return value > otherValues.lowerReference
           ? null
           : "Must be greater than lower reference";
       },
       lowerReference: (value, otherValues) => {
-        if (!value) return "Value is required";
+        if (!value && value !== 0) return "Value is required";
 
         return value < otherValues.upperReference
           ? null

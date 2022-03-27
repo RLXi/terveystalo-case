@@ -1,10 +1,19 @@
 import { Router, json } from "express";
+import {
+  default as validator,
+  body,
+  checkSchema,
+  validationResult,
+} from "express-validator";
 import cors from "cors";
+
 const router = Router();
+
+router.use(cors());
+router.use(json());
 
 import {
   testConnection,
-  createStartingData,
   getAllMeasurements,
   getMeasurementById,
   createMeasurement,
@@ -13,8 +22,40 @@ import {
   createDB,
 } from "./db.js";
 
-router.use(cors());
-router.use(json());
+const stringValidation = {
+  isEmpty: false,
+  isString: true,
+  trim: true,
+};
+
+const numberValidation = {
+  isEmpty: false,
+  isInt: true,
+  toInt: true,
+  custom: {
+    options: (value, { req }) => {
+      const lower = req.body.lowerReference;
+      const upper = req.body.upperReference;
+      return upper > lower;
+    },
+  },
+};
+
+const validation = {
+  code: stringValidation,
+  name: stringValidation,
+  unit: stringValidation,
+  lowerReference: numberValidation,
+  upperReference: numberValidation,
+};
+
+const validationWithId = Object.assign({}, validation, {
+  id: {
+    isEmpty: false,
+    isInt: true,
+    toInt: true,
+  },
+});
 
 router.get("/", (req, res) => {
   res.status(200).send("Welcome!");
@@ -52,8 +93,13 @@ router.get("/tests/:id", async (req, res) => {
   res.status(204).json({});
 });
 
-router.post("/tests", async (req, res) => {
+router.post("/tests", checkSchema(validation), async (req, res) => {
   const { code, name, unit, lowerReference, upperReference } = req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).send("Validation error");
+  }
 
   // should do some validation before sending
   const newMeasurement = {
@@ -68,10 +114,15 @@ router.post("/tests", async (req, res) => {
   res.status(201).json(measurement);
 });
 
-router.put("/tests/:id", async (req, res) => {
+router.put("/tests/:id", checkSchema(validationWithId), async (req, res) => {
   const { code, name, unit, lowerReference, upperReference } = req.body;
   const id = parseInt(req.params.id);
-  // should do some validation before sending
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).send("Validation error");
+  }
+
   const measurement = {
     id,
     code,
@@ -82,6 +133,7 @@ router.put("/tests/:id", async (req, res) => {
   };
 
   const updatedMeasurement = await updateMeasurement(measurement);
+  if (!updatedMeasurement) return res.status(404).send("Measurement not found");
   res.status(201).json(updatedMeasurement);
 });
 

@@ -147,6 +147,29 @@ describe("Run tests", () => {
       });
   });
 
+  it("fails to create invalid measurement", (done) => {
+    request(app)
+      .post("/tests")
+      .send({
+        name: "Test molecyle",
+        code: "TST",
+        unit: "g/l",
+        lowerReference: 10,
+        upperReference: 0,
+      })
+      .expect("Validation error")
+      .expect(400)
+      .end(function (err, req) {
+        try {
+          if (err) throw err;
+          console.log(chalk.bgGreen.black("POST /tests", "success"));
+        } catch (e) {
+          return done(chalk.bgRed.black("POST /tests", "error"));
+        }
+        return done();
+      });
+  });
+
   it("can update measurement", (done) => {
     request(app)
       .put("/tests/1")
@@ -166,6 +189,52 @@ describe("Run tests", () => {
         referenceValues: { lower: 0, upper: 10 },
       })
       .expect(201)
+      .end(function (err, req) {
+        try {
+          if (err) throw err;
+          console.log(chalk.bgGreen.black("PUT /tests/1", "success"));
+          return done();
+        } catch (e) {
+          return done(chalk.bgRed.black("PUT /tests/1", "error"));
+        }
+      });
+  });
+
+  it("fails to update with nonexisting measurement, ID: 9999", (done) => {
+    request(app)
+      .put("/tests/9999")
+      .send({
+        name: "Test molecyle",
+        code: "TST",
+        unit: "g/l",
+        lowerReference: 0,
+        upperReference: 10,
+      })
+      .expect("Measurement not found")
+      .expect(404)
+      .end(function (err, req) {
+        try {
+          if (err) throw err;
+          console.log(chalk.bgGreen.black("PUT /tests/9999", "success"));
+        } catch (e) {
+          return done(chalk.bgRed.black("PUT /tests/9999", "error"));
+        }
+        return done();
+      });
+  });
+
+  it("fails to update with invalid measurement", (done) => {
+    request(app)
+      .put("/tests/1")
+      .send({
+        name: "Test molecyle",
+        code: "TST",
+        unit: "g/l",
+        lowerReference: 10,
+        upperReference: 0,
+      })
+      .expect("Validation error")
+      .expect(400)
       .end(function (err, req) {
         try {
           if (err) throw err;

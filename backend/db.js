@@ -134,6 +134,8 @@ async function updateMeasurement({
 }) {
   await sequelize.sync();
   const entry = await Measurement.findByPk(id);
+  if (!entry) return null;
+
   const updated = await entry.update({
     code,
     name,
