@@ -24,6 +24,22 @@ describe("Run tests", () => {
       });
   });
 
+  it("can test connection", (done) => {
+    request(app)
+      .get("/connectiontest")
+      .expect("Connection has been established successfully.")
+      .expect(200)
+      .end(function (err, req) {
+        try {
+          if (err) throw err;
+          console.log(chalk.bgGreen.black("GET /connectiontest", "success"));
+        } catch (e) {
+          return done(chalk.bgRed.black("GET /connectiontest", "error"));
+        }
+        return done();
+      });
+  });
+
   it("can fetch data", (done) => {
     request(app)
       .get("/tests")
