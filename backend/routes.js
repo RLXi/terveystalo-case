@@ -8,7 +8,9 @@ import {
   getAllMeasurements,
   getMeasurementById,
   createMeasurement,
+  updateMeasurement,
   deleteMeasurement,
+  createDB,
 } from "./db.js";
 
 router.use(cors());
@@ -19,7 +21,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/startingdata", async (req, res) => {
-  const created = await createStartingData();
+  const created = await createDB();
   if (!created) {
     res.status(200).send("Data already exist");
     return;
@@ -66,9 +68,30 @@ router.post("/tests", async (req, res) => {
   res.status(201).json(measurement);
 });
 
+router.put("/tests/:id", async (req, res) => {
+  const { code, name, unit, lowerReference, upperReference } = req.body;
+  const id = parseInt(req.params.id);
+  // should do some validation before sending
+  const measurement = {
+    id,
+    code,
+    name,
+    unit,
+    lowerReference,
+    upperReference,
+  };
+
+  const updatedMeasurement = await updateMeasurement(measurement);
+  res.status(201).json(updatedMeasurement);
+});
+
 router.delete("/tests/:id", async (req, res) => {
   const { id } = req.params;
   const response = await deleteMeasurement(parseInt(id));
+  if (!response) {
+    res.status(500).send("Can't delete measurement");
+    return;
+  }
   res.status(204).send("Entry deleted");
 });
 

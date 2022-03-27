@@ -2,9 +2,12 @@ import { Sequelize, Model, DataTypes } from "@sequelize/core";
 
 import { convertToMeasurement } from "./utils.js";
 
+const storage = process.env.DB_STORAGE || "database.sqlite";
+
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "./database.sqlite",
+  storage: `./${storage}`,
+  logging: false,
 });
 
 /**
