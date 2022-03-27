@@ -4,16 +4,9 @@ import { useNotifications } from "@mantine/notifications";
 import axios from "axios";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { FormFields } from "../interfaces";
 
 const apiurl = import.meta.env.VITE_APIURL || "http://localhost:8080/api";
-
-interface FormFields {
-  name: string;
-  code: string;
-  unit: string;
-  lowerReference: number;
-  upperReference: number;
-}
 
 export function CreateMeasurement({
   closeDrawer,
