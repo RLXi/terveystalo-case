@@ -188,7 +188,7 @@ describe("Run tests", () => {
         unit: "g/l",
         referenceValues: { lower: 0, upper: 10 },
       })
-      .expect(201)
+      .expect(202)
       .end(function (err, req) {
         try {
           if (err) throw err;

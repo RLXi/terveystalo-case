@@ -134,7 +134,7 @@ router.put("/tests/:id", checkSchema(validationWithId), async (req, res) => {
 
   const updatedMeasurement = await updateMeasurement(measurement);
   if (!updatedMeasurement) return res.status(404).send("Measurement not found");
-  res.status(201).json(updatedMeasurement);
+  res.status(202).json(updatedMeasurement);
 });
 
 router.delete("/tests/:id", async (req, res) => {
