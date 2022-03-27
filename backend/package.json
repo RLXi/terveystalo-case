@@ -8,7 +8,7 @@
     "dev": "nodemon .",
     "init": "node init.js",
     "test:win": "set DB_STORAGE=db-test.sqlite&& mocha && del db-test.sqlite",
-    "test:unix": "DB_STORAGE=db-test.sqlite && mocha && rm db-test.sqlite"
+    "test:unix": "DB_STORAGE=db-test.sqlite mocha && rm db-test.sqlite"
   },
   "keywords": [],
   "author": "",
