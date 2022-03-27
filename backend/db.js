@@ -45,10 +45,11 @@ Measurement.init(
 async function createDB() {
   await sequelize.sync();
 
-  createStartingData();
+  return createStartingData();
 }
 
 /**
+ * Creates few starting entries in to the database
  *
  * @returns {boolean}
  */
@@ -72,11 +73,12 @@ async function createStartingData() {
     upperReference: 3,
   });
 
-  console.log([hemoglobin.toJSON(), ldl.toJSON()]);
   return true;
 }
 
 /**
+ *  Tests connection
+ *
  *  @returns {string}
  */
 async function testConnection() {
@@ -89,7 +91,7 @@ async function testConnection() {
 }
 
 /**
- *  Create new meaurement entry into the database
+ *  Create new measurement entry into the database
  *
  * @param {Measurement} obj - Measurement object
  * @returns {ConvertedMeasurement}
@@ -109,11 +111,39 @@ async function createMeasurement({
     lowerReference,
     upperReference,
   });
-  console.log(entry.toJSON());
+
   return convertToMeasurement(entry.toJSON());
 }
 
 /**
+ * Update existing measurement entry in the database
+ *
+ * @param {Measurement} obj - Measurement object
+ * @returns {ConvertedMeasurement}
+ */
+async function updateMeasurement({
+  id,
+  code,
+  name,
+  unit,
+  lowerReference,
+  upperReference,
+}) {
+  await sequelize.sync();
+  const entry = await Measurement.findByPk(id);
+  const updated = await entry.update({
+    code,
+    name,
+    unit,
+    lowerReference,
+    upperReference,
+  });
+
+  return convertToMeasurement(updated.toJSON());
+}
+
+/**
+ * Get all measurements from the database
  *
  * @returns {ConvertedMeasurement[]}
  */
@@ -125,6 +155,7 @@ async function getAllMeasurements() {
 }
 
 /**
+ * Get one measurement from the database by id
  *
  * @param {number} id
  * @returns {ConvertedMeasurement}
@@ -137,6 +168,7 @@ async function getMeasurementById(id) {
 }
 
 /**
+ * Get one measurement from the database by code
  *
  * @param {string} code
  * @returns {ConvertedMeasurement}
@@ -151,13 +183,17 @@ async function getMeasurementByCode(code) {
 }
 
 /**
+ * Delete measurement from the database
  *
  * @param {number} id
  * @returns {boolean}
  */
 async function deleteMeasurement(id) {
-  await Measurement.destroy({ where: { id } });
-  console.log(`Measurement #${id} deleted`);
+  try {
+    await Measurement.destroy({ where: { id } });
+  } catch (e) {
+    return false;
+  }
   return true;
 }
 
@@ -165,6 +201,7 @@ export {
   testConnection,
   createStartingData,
   createMeasurement,
+  updateMeasurement,
   deleteMeasurement,
   getAllMeasurements,
   getMeasurementById,
