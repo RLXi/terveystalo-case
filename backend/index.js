@@ -12,7 +12,15 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 8080;
 
+// simulates server delay
+function serverDelay(req, res, next) {
+  setTimeout(() => {
+    next();
+  }, 0);
+}
+
 app.use(express.static(path.join(__dirname, "public")));
+app.use(serverDelay);
 app.use("/api", router);
 
 app.get("*", (req, res) => {
