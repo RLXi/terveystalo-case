@@ -34,7 +34,6 @@ export function useData() {
   async function deleteItem(id: number) {
     try {
       const response = await axios.delete(`${apiurl}/tests/${id}`);
-      console.log(response);
       const filtered = data.filter((item) => item.id !== id);
       setData(filtered);
       notifications.showNotification({
