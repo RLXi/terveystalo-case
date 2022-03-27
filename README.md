@@ -1,15 +1,11 @@
 # terveystalo-case
 
-Web app
-
----
+Simple web app for managing laboratory tests.
 
 ## Requirements
 
 - NodeJS
 - Docker
-
----
 
 ## Start production build locally with docker
 
@@ -24,12 +20,6 @@ To reset the app to its initial state
 `docker-compose down`
 
 `docker-compose up`
-
-If you did changes to the code, you have to rebuild the images
-
-`docker-compose up --build`
-
----
 
 ## Development
 
@@ -59,7 +49,7 @@ Run following commands in terminal
 
 Once both backend and frontend are running, you should be able to visit the website at [http://localhost:3000](http://localhost:3000)
 
-## Running tests in backend
+## Running tests in the backend
 
 You must have installed the dependencies for the backend
 
