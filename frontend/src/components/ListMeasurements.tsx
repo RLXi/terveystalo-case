@@ -1,6 +1,7 @@
-import { Drawer, Button, Table, Center } from "@mantine/core";
+import { Drawer, Button, Table, Center, Skeleton, Loader } from "@mantine/core";
 import { Measurement } from "../interfaces";
 import { useState } from "react";
+import { MdScience } from "react-icons/md";
 import { useData } from "../hooks";
 import { CreateMeasurement, TableRow } from "./";
 
@@ -31,9 +32,10 @@ function MeasurementTable({
 }
 
 export function ListMeasurements() {
-  const { data, deleteItem } = useData();
+  const { data, loading, deleteItem, setReload } = useData();
   const [opened, setOpened] = useState(false);
-  if (data.length === 0) return null;
+
+  if (loading) return <Loader />;
 
   return (
     <div>
@@ -41,14 +43,23 @@ export function ListMeasurements() {
       <Drawer
         opened={opened}
         onClose={() => setOpened(false)}
-        title="Create"
+        title="Create new measurement"
         padding="xl"
         size="xl"
+        position="right"
       >
-        <CreateMeasurement closeDrawer={() => setOpened(false)} />
+        <CreateMeasurement
+          closeDrawer={() => {
+            setOpened(false);
+            setReload(true);
+          }}
+        />
       </Drawer>
       <Center>
-        <Button onClick={() => setOpened((prev) => !prev)}>Create new</Button>
+        <Button onClick={() => setOpened((prev) => !prev)}>
+          <MdScience />
+          Create new
+        </Button>
       </Center>
     </div>
   );
