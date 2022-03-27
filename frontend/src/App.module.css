@@ -1,0 +1,4 @@
+.App {
+  width: clamp(40ch, 50vw, 100ch);
+  margin-inline: auto;
+}

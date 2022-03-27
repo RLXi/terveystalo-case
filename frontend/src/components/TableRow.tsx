@@ -11,7 +11,7 @@ export function TableRow({
 }) {
   return (
     <tr>
-      <td>
+      <td style={{ wordBreak: "break-word" }}>
         {data.name} <Badge color={"indigo"}>{data.code}</Badge>
       </td>
       <td>{data.unit}</td>
