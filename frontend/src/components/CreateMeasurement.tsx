@@ -27,17 +27,25 @@ export function CreateMeasurement({
       upperReference: 0,
     },
     validate: {
-      upperReference: (value, otherValues) =>
-        value > otherValues.lowerReference ? null : "Invalid value",
-      lowerReference: (value, otherValues) =>
-        value < otherValues.upperReference ? null : "Invalid value",
+      upperReference: (value, otherValues) => {
+        if (!value) return "Value is required";
+        return value > otherValues.lowerReference
+          ? null
+          : "Must be greater than lower reference";
+      },
+      lowerReference: (value, otherValues) => {
+        if (!value) return "Value is required";
+
+        return value < otherValues.upperReference
+          ? null
+          : "Must be less than upper reference";
+      },
     },
   });
 
   async function handleSubmit(values: FormFields) {
     try {
-      const response = await axios.post(`${apiurl}/tests`, values);
-      console.log(response.data);
+      await axios.post(`${apiurl}/tests`, values);
       notifications.showNotification({
         icon: <FaCheck />,
         message: "Measurement created",
@@ -90,9 +98,7 @@ export function CreateMeasurement({
         />
 
         <Group position="right" mt="md">
-          <Button type="submit" disabled={!measurementForm.errors}>
-            Submit
-          </Button>
+          <Button type="submit">Submit</Button>
         </Group>
       </form>
     </Box>
