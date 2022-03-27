@@ -17,10 +17,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("GET /startingdata", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("GET /startingdata", "error"));
         }
-        return done();
       });
   });
 
@@ -33,10 +33,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("GET /connectiontest", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("GET /connectiontest", "error"));
         }
-        return done();
       });
   });
 
@@ -49,10 +49,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("GET /tests", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("GET /tests", "error"));
         }
-        return done();
       });
   });
 
@@ -72,10 +72,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("GET /tests/1", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("GET /tests/1", "error"));
         }
-        return done();
       });
   });
 
@@ -87,10 +87,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("GET /tets", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("GET /tets", "error"));
         }
-        return done();
       });
   });
 
@@ -102,10 +102,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("GET /tests/asd", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("GET /tests/asd", "error"));
         }
-        return done();
       });
   });
 
@@ -117,10 +117,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("GET /tests/99999999", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("GET /tests/99999999", "error"));
         }
-        return done();
       });
   });
 
@@ -140,10 +140,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("POST /tests", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("POST /tests", "error"));
         }
-        return done();
       });
   });
 
@@ -163,10 +163,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("POST /tests", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("POST /tests", "error"));
         }
-        return done();
       });
   });
 
@@ -216,10 +216,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("PUT /tests/9999", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("PUT /tests/9999", "error"));
         }
-        return done();
       });
   });
 
@@ -239,10 +239,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("PUT /tests/1", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("PUT /tests/1", "error"));
         }
-        return done();
       });
   });
 
@@ -254,10 +254,10 @@ describe("Run tests", () => {
         try {
           if (err) throw err;
           console.log(chalk.bgGreen.black("DELETE /tests/1", "success"));
+          return done();
         } catch (e) {
           return done(chalk.bgRed.black("DELETE /tests/1", "error"));
         }
-        return done();
       });
   });
 });
